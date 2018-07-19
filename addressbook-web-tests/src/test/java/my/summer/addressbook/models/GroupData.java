@@ -1,4 +1,4 @@
-package my.summer.addressbook;
+package my.summer.addressbook.models;
 
 public class GroupData {
   private final String groupname;
