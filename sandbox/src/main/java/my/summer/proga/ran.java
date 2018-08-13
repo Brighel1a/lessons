@@ -1,3 +1,7 @@
+package my.summer.proga;
+
+import my.summer.proga.Point;
+
 public class ran {
 
 

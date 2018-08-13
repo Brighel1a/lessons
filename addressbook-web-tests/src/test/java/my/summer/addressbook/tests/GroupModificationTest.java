@@ -3,7 +3,7 @@ package my.summer.addressbook.tests;
 import my.summer.addressbook.models.GroupData;
 import org.testng.annotations.Test;
 
-public class GroupModificationTests extends TestBase{
+public class GroupModificationTest extends TestBase{
 
      @Test
   public void testGroupModificationTests(){

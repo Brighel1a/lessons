@@ -1,5 +1,6 @@
 package my.summer.proga;
 
+import my.summer.proga.Square;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

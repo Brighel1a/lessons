@@ -5,7 +5,7 @@ import my.summer.addressbook.models.GroupData;
 import org.testng.annotations.Test;
 
 
-public class GroupCreationTests extends TestBase {
+public class GroupCreationTest extends TestBase {
 
   @Test
   public void testGroupCreation() {
