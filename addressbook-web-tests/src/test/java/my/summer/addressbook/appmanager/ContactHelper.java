@@ -2,7 +2,10 @@ package my.summer.addressbook.appmanager;
 
 import my.summer.addressbook.models.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class ContactHelper extends HelperBase{
 
@@ -11,7 +14,7 @@ public class ContactHelper extends HelperBase{
     super(wd);
   }
 
-  public void fillContactForm(ContactData contactData) {
+  public void fillContactForm(ContactData contactData, boolean creation) {
     typeContact(By.name("firstname"), contactData.getFirstname());
     typeContact(By.name("middlename"), contactData.getMiddlename());
     typeContact(By.name("lastname"), contactData.getLastname());
@@ -20,12 +23,23 @@ public class ContactHelper extends HelperBase{
     typeContact(By.name("company"), contactData.getCompany());
     typeContact(By.name("home"), contactData.getHome());
     typeContact(By.name("fax"), contactData.getFax());
+    typeContact(By.name("address2"), contactData.getAddress());
+    if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
 
   public void typeContact(By locator, String nameElement) {
-    click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(nameElement);
+    if (nameElement != null) {
+      String existingText = wd.findElement(locator).getAttribute("Value");
+      if (! nameElement.equals(existingText)) {
+        click(locator);
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(nameElement);
+      }
+    }
   }
 
   public void submitContactCreation() {
@@ -45,8 +59,11 @@ public class ContactHelper extends HelperBase{
   }
 
   public void gotoEditContact() {
-    click(By.xpath("//img[@title='Edit']"));
+    if (wd.findElement(By.xpath("//img[@title='Edit']")) != null) {
+      click(By.xpath("//img[@title='Edit']"));
+    }
   }
+
   public void updateContact(){
     click(By.xpath("//input[@value='Update']"));
   }
