@@ -4,8 +4,12 @@ import my.summer.addressbook.models.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
 
@@ -25,8 +29,11 @@ public class ContactHelper extends HelperBase{
     typeContact(By.name("fax"), contactData.getFax());
     typeContact(By.name("address2"), contactData.getAddress());
     if (creation) {
+      if (isElementPresent(By.xpath("//select[@id='new_group']/option[2])"))) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
+    }
+    }
+     else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
@@ -50,22 +57,39 @@ public class ContactHelper extends HelperBase{
     click(By.linkText("home page"));
   }
 
-  public void selectContact (){
-    click(By.linkText("selected[]"));
-  }
-
   public void deleteContact (){
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void gotoEditContact() {
+  public void gotoEditContact(int index) {
     if (wd.findElement(By.xpath("//img[@title='Edit']")) != null) {
-      click(By.xpath("//img[@title='Edit']"));
+      wd.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
     }
   }
 
   public void updateContact(){
     click(By.xpath("//input[@value='Update']"));
   }
+
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elementsLastName = wd.findElements(By.xpath(".//tbody/*/td[2]"));
+    List<WebElement> elementsFirstName = wd.findElements(By.xpath(".//tbody/*/td[3]"));
+    for (int i=0;i<elementsLastName.size();i++){
+      int id = Integer.parseInt(elementsLastName.get(i).findElement(By.xpath("preceding-sibling::td/input")).getAttribute("id"));
+        ContactData contact = new ContactData(elementsFirstName.get(i).getText(), null, elementsLastName.get(i).getText(), null, null, null, null, null, null, null, id);
+        contacts.add(contact);
+    }
+    return contacts;
+  }
+
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+  }
+
 
 }

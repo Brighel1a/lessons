@@ -4,9 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class NavigationHelper extends HelperBase{
-  private WebDriver wd;
+//  private WebDriver wd;
 
-  public NavigationHelper(WebDriver wd) {super(wd);
+  public NavigationHelper(WebDriver wd) {
+    super(wd);
   }
 
   public void gotoGroupPage() {
@@ -28,13 +29,12 @@ public class NavigationHelper extends HelperBase{
     }
   }
 
-  public void gotoContact(){
+  public void gotoContact() {
     if (isElementPresent(By.id("maintable"))) {
       return;
     } else {
       click(By.linkText("home"));
     }
-    }
-
+   }
   }
 
