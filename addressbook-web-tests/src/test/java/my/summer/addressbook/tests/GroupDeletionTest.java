@@ -1,32 +1,35 @@
 package my.summer.addressbook.tests;
 
 import my.summer.addressbook.models.GroupData;
-import org.testng.Assert;
+import my.summer.addressbook.models.Groups;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-public class GroupDeletionTest extends TestBase{
+public class GroupDeletionTest extends TestBase {
 
-
-
-    @Test
-    public void testGroupDeletion() {
-        app.getNavigationHelper().gotoGroupPage();
-        if (! app.getGroupHelper().isAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("gg2", "123", "134"));
-        }
-        List<GroupData> before = app.getGroupHelper().getGroupList();
-        app.getGroupHelper().SelectGroup(before.size() - 1);
-        app.getGroupHelper().deleteSelectedGroups();
-        app.getGroupHelper().returnToGroupPage();
-        List<GroupData> after = app.getGroupHelper().getGroupList();
-        Assert.assertEquals(after.size(), before.size() -1);
-
-        before.remove(before.size() - 1);
-        Assert.assertEquals(before, after);
-
+  @BeforeMethod
+  public void ensurePrecondition() {
+    app.goTo().groupPage();
+    if (app.group().all().size() == 0) {
+      app.group().create(new GroupData().withGroupname("smile").withFooter("new").withHeader("use"));
     }
+  }
+
+  @Test
+  public void testGroupDeletion() {
+
+    Groups before = app.group().all();
+    GroupData deletedGroup = before.iterator().next();
+    app.group().delete(deletedGroup);
+    assertThat(app.group().count(), equalTo(before.size() - 1));
+    Groups after = app.group().all();
+
+
+    assertThat (after, equalTo(before.without(deletedGroup)));
+  }
 
 
 }

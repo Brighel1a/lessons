@@ -9,15 +9,15 @@ import java.util.List;
 public class ContactDeletionTest extends TestBase{
 
 
-  @Test
+  @Test (enabled=false)
   public void testContactDeletion() {
-    app.getNavigationHelper().gotoContact();
-    List<ContactData> before = app.getContactHelper().getContactList();
+    app.goTo().gotoContact();
+    List<ContactData> before = app.contact().getContactList();
     //app.getContactHelper().selectContact(before.size()-1);
-    app.getContactHelper().gotoEditContact(before.size()-1);
-    app.getContactHelper().deleteContact();
-    app.getNavigationHelper().gotoContact();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().gotoEditContact(before.size()-1);
+    app.contact().deleteContact();
+    app.goTo().gotoContact();
+    List<ContactData> after = app.contact().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
 
     before.remove(before.size() - 1);

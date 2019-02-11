@@ -3,29 +3,31 @@ package my.summer.addressbook.models;
 import java.util.Objects;
 
 public class GroupData {
-  private final String groupname;
-  private final String header;
-  private final String footer;
+  private  String groupname;
+  private  String header;
+  private  String footer;
+  private int id = 0;
 
-  public void setId(int id) {
+  public GroupData withId(int id) {
     this.id = id;
+    return this;
   }
 
-  private int id;
 
-  public GroupData(String name, String header, String footer) {
-    this.groupname = name;
-    this.header = header;
-    this.footer = footer;
-    this.id = 0;
+  public GroupData withGroupname(String groupname) {
+    this.groupname = groupname;
+    return this;
+
   }
 
-  public GroupData(int id, String name, String header, String footer) {
-    this.groupname = name;
+  public GroupData withHeader(String header) {
     this.header = header;
-    this.footer = footer;
+    return this;
+  }
 
-    this.id = 0;
+  public GroupData withFooter(String footer) {
+    this.footer = footer;
+    return this;
   }
 
   public String getGroupname() {
@@ -46,14 +48,6 @@ public class GroupData {
   }
 
   @Override
-  public String toString() {
-    return "GroupData{" +
-            "groupname='" + groupname + '\'' +
-            ", id=" + id +
-            '}';
-  }
-
-  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -67,4 +61,13 @@ public class GroupData {
 
     return Objects.hash(groupname, id);
   }
+
+  @Override
+  public String toString() {
+    return "GroupData{" +
+            "groupname='" + groupname + '\'' +
+            ", id=" + id +
+            '}';
+  }
+
 }

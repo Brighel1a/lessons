@@ -8,17 +8,17 @@ import java.util.List;
 
 public class ContactModificationTest extends TestBase {
 
-  @Test
+  @Test (enabled=false)
   public void testContactModification(){
-    app.getNavigationHelper().gotoContact();
-    List<ContactData> before = app.getContactHelper().getContactList();
+    app.goTo().gotoContact();
+    List<ContactData> before = app.contact().getContactList();
     //app.getContactHelper().selectContact(before.size()-1);
-    app.getContactHelper().gotoEditContact(before.size()-1);
-    app.getContactHelper().fillContactForm(new ContactData("Проверю3",null, "Есть", "ЕстьНик", "fgdgf", "gf", "gfrt","sdf", "Проверка1", null), false);
-    ContactData contact = new ContactData("Проверю3",null, "Есть", "Есть", "fgdgf", "gf", "gfrt","sdf", "Проверка1", null, before.get(before.size() - 1).getId());
-    app.getContactHelper().updateContact();
-    app.getNavigationHelper().gotoContact();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().gotoEditContact(before.size()-1);
+    app.contact().fillContactForm(new ContactData("Проверю3",null, "Есть", "ЕстьНик", "fgdgf", "gf", "gfrt","sdf", "Проверка1", null), false);
+    ContactData contact = new ContactData("Проверю3",null, "Есть", "Есть", "fgdgf", "gf", "gfrt","sdf", "Проверка1", null, before.get(before.size() - 1).withId());
+    app.contact().updateContact();
+    app.goTo().gotoContact();
+    List<ContactData> after = app.contact().getContactList();
     Assert.assertEquals(after.size(), before.size());
 
     before.remove(before.size()-1);
