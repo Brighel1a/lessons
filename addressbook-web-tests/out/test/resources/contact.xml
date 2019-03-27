@@ -1,0 +1,17 @@
+<list>
+  <contact>
+    <firstname>Name 0</firstname>
+    <lastname>LastName 0</lastname>
+    <phoneWork>123 0</phoneWork>
+  </contact>
+  <contact>
+    <firstname>Name 1</firstname>
+    <lastname>LastName 1</lastname>
+    <phoneWork>123 1</phoneWork>
+  </contact>
+  <contact>
+    <firstname>Name 2</firstname>
+    <lastname>LastName 2</lastname>
+    <phoneWork>123 2</phoneWork>
+  </contact>
+</list>

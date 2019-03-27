@@ -6,9 +6,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
-import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 public class ApplicationManager {
+  private final Properties properties;
   WebDriver wd;
 
   private SessionHelper sessionHelper;
@@ -19,12 +24,15 @@ public class ApplicationManager {
 
   public ApplicationManager(String browser) {
     this.browser = browser;
+    properties = new Properties();
   }
 
 
-  public void init() {
-    String browser = BrowserType.CHROME;
+  public void init() throws IOException {
+    String target = System.getProperty("target", "local");
+    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     System.setProperty("webdriver.gecko.driver", "C:\\Devel\\geckodriver.exe");
+
     if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver();
     } else if (browser.equals(BrowserType.CHROME)) {
@@ -33,12 +41,12 @@ public class ApplicationManager {
       wd = new InternetExplorerDriver();
     }
   //  wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-    wd.get("http://localhost/addressbook");
+    wd.get(properties.getProperty("Web.baseUrl")) ;
     sessionHelper = new SessionHelper(wd);
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     contactHelper = new ContactHelper (wd);
-    sessionHelper.login("admin","secret");
+    sessionHelper.login(properties.getProperty("Web.baseLog"), properties.getProperty("Web.basePass"));
 
   }
 
@@ -47,7 +55,7 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public ContactHelper getContactHelper() {
+  public ContactHelper contact() {
     return contactHelper;
   }
 
