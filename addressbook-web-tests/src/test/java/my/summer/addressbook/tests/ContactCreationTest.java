@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import my.summer.addressbook.models.ContactData;
 import my.summer.addressbook.models.Contacts;
+import my.summer.addressbook.models.GroupData;
+import my.summer.addressbook.models.Groups;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -62,17 +64,22 @@ public class ContactCreationTest extends TestBase {
 
   @Test (enabled=true, dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData newContact) {
+    Groups groups = app.db().groups();
+    if (groups.size()==0){
+      createGroup(groups);
+    }
+    Contacts before = app.db().contacts();
+    app.contact().create(newContact.inGroup(groups.iterator().next()));
+    File photo = new File("src/test/resources/picture.png");
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+     Contacts after = app.db().contacts();
 
-      File photo = new File("src/test/resources/picture.png");
-      Contacts before = app.contact().all();
-      app.contact().create(newContact);
-      assertThat(app.contact().count(), equalTo(before.size() + 1));
-      Contacts after = app.contact().all();
-
-      assertThat(after, equalTo(before.withAdded(
+    assertThat(after, equalTo(before.withAdded(
               newContact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
+    verifyGroupListInUI();
   }
+
 
   @Test (enabled = false)
   public void testCurrentDir() {
@@ -81,7 +88,14 @@ public class ContactCreationTest extends TestBase {
     File photo = new File("src/test/resources/picture.png");
     System.out.println(photo.getAbsolutePath());
     System.out.println(photo.exists());
+  }
 
+  private void createGroup(Groups groups) {
+    GroupData group = new GroupData().withGroupname("addNameforTectGroup").withHeader("addForContact");
+    app.goTo().groupPage();
+    app.group().create(group);
+    app.goTo().gotoContact();
+    groups.add(group);
   }
 
 }

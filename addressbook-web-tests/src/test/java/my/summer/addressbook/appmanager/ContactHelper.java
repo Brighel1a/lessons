@@ -33,9 +33,12 @@ public class ContactHelper extends HelperBase {
     typeContact(By.name("work"), contactData.phoneWork());
     typeFile(By.name("photo"), contactData.photo());
     if (creation) {
-      if (isElementPresent(By.xpath("//select[@id='new_group']/option[2])"))) {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.group());
-      }
+      if(contactData.getGroups().size() > 0){
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+     if (isElementPresent(By.xpath("//select[@id='new_group']/option[2])"))) {
+       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGroupname());
+     }
+     }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -97,6 +100,18 @@ public class ContactHelper extends HelperBase {
     click(By.xpath(String.format(".//input[@id='%s']/ancestor::*/td/a/img[@title='Details']", id)));
   }
 
+  public void selectContactById(int id) {
+    wd.findElement(By.xpath("//input[@id='" + id + "']")).click();
+  }
+
+  public void selectGroupById(int id) {
+    wd.findElement(By.xpath(".//option/ancestor::select[@name='to_group']/option[@value='"+id+"']")).click();
+  }
+
+  public void addGroupToContact() {
+    click(By.xpath(".//input[@name=\"add\"]"));
+  }
+
   public void updateContact() {
     click(By.xpath("//input[@value='Update']"));
   }
@@ -152,11 +167,6 @@ public class ContactHelper extends HelperBase {
     return new Contacts(contactCache);
 
   }
-
-  public void selectContactById(int id) {
-    wd.findElement(By.xpath("//input[@id='" + id + "']")).click();
-  }
-
 
   public ContactData infoFromEditForm(ContactData contact) {
     gotoEditContactById(contact.getId());

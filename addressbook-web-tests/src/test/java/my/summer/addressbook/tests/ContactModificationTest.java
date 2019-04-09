@@ -17,16 +17,17 @@ public class ContactModificationTest extends TestBase {
 
   @Test (enabled=true)
   public void testContactModification(){
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifyContact = before.iterator().next();
     ContactData contact = new ContactData().withFirstname("New name")
             .withLastname("New Lst name").withMiddlename("New middle name").withAddress("new address").withId(modifyContact.getId());
     app.contact().modify(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
 
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
+    verifyGroupListInUI();
   }
 
 

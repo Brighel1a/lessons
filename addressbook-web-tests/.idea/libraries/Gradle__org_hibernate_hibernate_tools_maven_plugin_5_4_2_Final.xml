@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.hibernate:hibernate-tools-maven-plugin:5.4.2.Final">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-tools-maven-plugin/5.4.2.Final/b393722d6abec8aa80b45a67015f2a7cc2f2ddb3/hibernate-tools-maven-plugin-5.4.2.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-tools-maven-plugin/5.4.2.Final/42f5c6e73dc31845970ecdba19617b971e3913ee/hibernate-tools-maven-plugin-5.4.2.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
