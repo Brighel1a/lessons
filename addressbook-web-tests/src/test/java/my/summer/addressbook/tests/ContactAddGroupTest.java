@@ -38,6 +38,7 @@ public class ContactAddGroupTest extends TestBase {
     int contactId = contacts.iterator().next().getId();
     Set<GroupData> existingGroupsOfContact = new HashSet<>(app.db().linkToContactGroupId(contactId));
     int group_id = 0;
+
     if(groupsFromDb.size()==existingGroupsOfContact.size()&&setGroupsFromDb.equals(existingGroupsOfContact)){
       createGroupReturnId(groupsFromDb);
       Set<GroupData> symmetricDiff = new HashSet<>(groupsFromDb);
