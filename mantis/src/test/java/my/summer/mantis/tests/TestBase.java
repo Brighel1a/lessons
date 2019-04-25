@@ -7,6 +7,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -20,10 +23,12 @@ public class TestBase {
   @BeforeSuite
   public void setUp() throws Exception {
     app.init();
+    app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.back");
   }
 
   @AfterSuite
-  public void tearDown() {
+  public void tearDown() throws IOException {
+    app.ftp().restore("config_inc.php.back", "config_inc.php");
     app.stop();
   }
 
