@@ -8,6 +8,12 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mantis.iml" filepath="$PROJECT_DIR$/.idea/modules/mantis.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mantis_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mantis_main.iml" group="mantis" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mantis_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mantis_test.iml" group="mantis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest.iml" filepath="$PROJECT_DIR$/.idea/modules/rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest_main.iml" filepath="$PROJECT_DIR$/.idea/modules/rest_main.iml" group="rest" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest_test.iml" filepath="$PROJECT_DIR$/.idea/modules/rest_test.iml" group="rest" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/soap-sample.iml" filepath="$PROJECT_DIR$/.idea/modules/soap-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/soap-sample_main.iml" filepath="$PROJECT_DIR$/.idea/modules/soap-sample_main.iml" group="soap-sample" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/soap-sample_test.iml" filepath="$PROJECT_DIR$/.idea/modules/soap-sample_test.iml" group="soap-sample" />
     </modules>
   </component>
 </project>
